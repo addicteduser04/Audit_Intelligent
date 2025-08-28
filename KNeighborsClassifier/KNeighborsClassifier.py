@@ -4,8 +4,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, classification_report
 import joblib
 # Load data
-book1 = pd.read_csv('./../data/Book1.csv', low_memory=False)
-features = pd.read_csv('./../data/features.csv', low_memory=False)
+book1 = pd.read_csv('./data/Book1.csv', low_memory=False)
+features = pd.read_csv('./data/features.csv', low_memory=False)
 new_features = features[['CodeClient','CompteProduit','CentreAnalyse']].copy()
 
 # --- K-Nearest Neighbour ---

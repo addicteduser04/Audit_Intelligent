@@ -20,7 +20,7 @@ features_not_in_book2 = features[book1['in_book2'] == 0].copy()
 grouped_not_in_book2 = features_not_in_book2.groupby('NumFacture').size().reset_index(name='count')
 print(grouped_not_in_book2.head())
 
-
+print(grouped_not_in_book2.shape)
 
 """"
 sum1=book1['in_book2'].sum()

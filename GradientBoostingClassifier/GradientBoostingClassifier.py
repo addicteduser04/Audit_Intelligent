@@ -3,11 +3,30 @@ from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, classification_report
 import joblib
-# Load data
-book1 = pd.read_csv('./../data/Book1.csv', low_memory=False)
-features = pd.read_csv('./../data/features.csv', low_memory=False)
-new_features = features[['CodeClient','CompteProduit','CentreAnalyse']].copy()
 
+# Load data
+book1=pd.read_csv('./data/Book1.csv', low_memory=False)
+book2=pd.read_csv('./data/Book2.csv', low_memory=False)
+book3=pd.read_csv('./data/Book3.csv', low_memory=False)
+
+#Data understanding 
+book1['in_book2'] = book1['NumFacture'].isin(book2['GLDOC']).astype(int)
+book1['in_book3'] = book1['NumFacture'].isin(book3['RPDOC']).astype(int)
+
+#Data cleaning 
+if 'TypeFacture' in book1.columns:
+    book1['TypeFacture'] = book1['TypeFacture'].astype(str)
+
+for date_col in ['DateCreation', 'DateModification', 'DateEDI', 'DateFacture']:
+    if date_col in book1.columns:
+        book1[date_col] = pd.to_datetime(book1[date_col], errors='coerce')
+
+#feature engineering 
+features = book1.drop(columns=['NumLigne','TypeFacture', 'DateFacture', 'DateCreation', 'DateModification', 'DateEDI', 'ReferenceEDI'], errors='ignore')
+# Journal Entry Encoding
+
+new_features = features[['CodeClient','CompteProduit','CentreAnalyse']].copy()
+new_features = new_features.apply(pd.to_numeric, errors='coerce').fillna(0)
 
 # --- Gradient Boosting ---
 X2 = new_features.copy()

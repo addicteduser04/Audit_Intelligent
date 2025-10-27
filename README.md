@@ -57,7 +57,6 @@ It combines data preprocessing, statistical analysis, and machine learning model
 │
 ├── data_preprocessing.py ← Script to clean and prepare data before training
 ├── data_understanding.py ← Script for data exploration and visualization
-├── testmodel.py ← Used to test or compare model performance
 ├── dockerfile ← Docker container configuration
 ├── requirements.txt ← Python dependencies
 └── README.md ← Project documentation
@@ -81,10 +80,6 @@ It combines data preprocessing, statistical analysis, and machine learning model
      - A Python script for model training and testing.
      - Two `.pkl` files storing trained models.
      - Two `.csv` files storing the predicted Y values.
-
-4. **Model Testing and Evaluation**  
-   - Use `testmodel.py` to compare model performances and evaluate accuracy, precision, recall, and other metrics.  
-   - Choose the best-performing model for your audit workflow.
 
 ---
 
@@ -112,9 +107,7 @@ pip install -r requirements.txt
 python data_preprocessing.py
 
 4. Train and Test a Model
-
 Example with Decision Tree:
-
 python DecisionTreeClassifier/decision_tree.py
 
 5. Evaluate Models

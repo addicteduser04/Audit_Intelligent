@@ -14,52 +14,49 @@ It combines data preprocessing, statistical analysis, and machine learning model
 
 ## Repository Structure
 
+Audit_Intelligent/
+│
 ├── data/
-│ ├── raw/ ← Contains the raw accounting data (Book1 original files)
-│ ├── Book1_filtered.csv ← Cleaned and preprocessed version of the data
-│ ├── Book1_scaled.csv ← Scaled or encoded dataset used for model training
-│ └── ... ← Other derived data files
+│ ├── Book1.csv #original file AFRIWARE
+│ ├── Book2.csv #original file JDE_911
+│ ├── Book3.csv #original file JDE_3b11
+│ ├── filtered_book5.csv # Cleaned & preprocessed dataset
+│ ├── numfacture_counts.csv # Derived data used for analysis
+│ └── ... # Other processed files
 │
 ├── DecisionTreeClassifier/
-│ ├── decision_tree.py ← Code used to train and test the Decision Tree model
-│ ├── decision_tree_model.pkl ← Saved trained model
-│ ├── decision_tree_model2.pkl ← Alternative trained model
-│ ├── Y_predicted.csv ← Predicted Y values for test data
-│ └── Y_predicted2.csv ← Additional predicted results
-│
-├── RandomForestClassifier/
-│ ├── random_forest.py
-│ ├── rf_model.pkl
-│ ├── rf_model2.pkl
-│ ├── Y_predicted.csv
-│ └── Y_predicted2.csv
-│
-├── GradientBoostingClassifier/
-│ ├── gradient_boosting.py
-│ ├── gb_model.pkl
-│ ├── gb_model2.pkl
-│ ├── Y_predicted.csv
-│ └── Y_predicted2.csv
+│ ├── decision_tree.py # Decision Tree model code
+│ ├── dt_model2.pkl # Trained model version 2
+│ ├── dt_model3.pkl # Trained model version 3
+│ ├── transaction_match_predictions_book2_DT.csv # Predictions for Book2
+│ └── ... # Other model results
 │
 ├── LogisticRegression/
-│ ├── logistic_regression.py
-│ ├── lr_model.pkl
-│ ├── lr_model2.pkl
-│ ├── Y_predicted.csv
-│ └── Y_predicted2.csv
+│ ├── logistic_regression.py # Logistic Regression model code
+│ ├── lr_model2.pkl # Trained model version 2
+│ ├── lr_model3.pkl # Trained model version 3
+│ ├── transaction_match_predictions_book2_LR.csv # Predictions for Book2
+│ └── transaction_match_predictions_book3_LR.csv # Predictions for Book3
+│
+├── GradientBoostingClassifier/
+│ ├── gradient_boosting.py # Gradient Boosting model code
+│ └── ... # Model files & predictions
 │
 ├── KNeighborsClassifier/
-│ ├── knn.py
-│ ├── knn_model.pkl
-│ ├── knn_model2.pkl
-│ ├── Y_predicted.csv
-│ └── Y_predicted2.csv
+│ ├── knn.py # KNN model code
+│ └── ... # Model files & predictions
 │
-├── data_preprocessing.py ← Script to clean and prepare data before training
-├── data_understanding.py ← Script for data exploration and visualization
-├── dockerfile ← Docker container configuration
-├── requirements.txt ← Python dependencies
-└── README.md ← Project documentation
+├── RandomForestClassifier/
+│ ├── random_forest.py # Random Forest model code
+│ └── ... # Model files & predictions
+│
+├── documentation/
+│ └── Figure_1.png # Correlation matrix for feature selection
+│
+├── data_preprocessing.py # Script for data cleaning & preparation
+├── data_understanding.py # Script for exploratory data analysis
+├── dockerfile # Docker configuration file
+└── README.md # Project documentation
 
 
 

@@ -10,8 +10,8 @@ book2=pd.read_csv('./data/Book2.csv', low_memory=False)
 book3=pd.read_csv('./data/Book3.csv', low_memory=False)
 
 #feature engineering
-book1['in_book2'] = book1['NumFacture'].isin(book2['GLDOC']).astype(int)
-book1['in_book3'] = book1['NumFacture'].isin(book3['RPDOC']).astype(int)
+book1['in_book2'] = 1-book1['NumFacture'].isin(book2['GLDOC']).astype(int)
+book1['in_book3'] = 1-book1['NumFacture'].isin(book3['RPDOC']).astype(int)
 #Data cleaning 
 if 'TypeFacture' in book1.columns:
     book1['TypeFacture'] = book1['TypeFacture'].astype(str)
@@ -22,14 +22,14 @@ for date_col in ['DateCreation', 'DateModification', 'DateEDI', 'DateFacture']:
 
 #feature engineering 
 features = book1.drop(columns=['NumLigne','TypeFacture', 'DateFacture', 'DateCreation', 'DateModification', 'DateEDI', 'ReferenceEDI'], errors='ignore')
-# Journal Entry Encoding
+
 
 new_features = features[['CodeClient','CompteProduit','CentreAnalyse']].copy()
 new_features = new_features.apply(pd.to_numeric, errors='coerce').fillna(0)
 # --- Logistic Regression ---
 X2 = new_features.copy()
 y2 = features['in_book2']
-X2_train, X2_test, y2_train, y2_test = train_test_split(X2, y2, test_size=0.2, random_state=42)
+X2_train, X2_test, y2_train, y2_test = train_test_split(X2, y2, test_size=0.2, random_state=25)
 lr_model2 = LogisticRegression(max_iter=1000, random_state=42)
 lr_model2.fit(X2_train, y2_train)
 pred2_lr = lr_model2.predict(X2_test)

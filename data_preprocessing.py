@@ -37,7 +37,7 @@ plt.show()
 
 # Journal Entry Encoding
 
-new_features = features[['CodeClient','CompteProduit','CentreAnalyse','in_book2','in_book3']].copy()
+new_features = features[['NumFacture','CodeClient','CompteProduit','CentreAnalyse','in_book2','in_book3']].copy()
 new_features = new_features.apply(pd.to_numeric, errors='coerce').fillna(0)
 print(new_features.head())
 

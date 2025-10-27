@@ -3,6 +3,7 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, classification_report
 import joblib
+import numpy as np
 
 
 # Load data
@@ -64,9 +65,44 @@ results_book2 = pd.DataFrame({
 results_book2.to_csv('transaction_match_predictions_book2_DT.csv', index=False)
 
 # Save predictions for Book3 
-results_book3 = pd.DataFrame({
-    'NumFacture': book1.loc[X3_test.index, 'NumFacture'],
-    'Book3_Predicted_DT': pred3_dt,
-    'Book3_Actual': y3_test.values
-})
-results_book3.to_csv('transaction_match_predictions_book3_DT.csv', index=False)
+# Build a DataFrame containing the original book1 rows for the test set plus predictions
+results_book3 = book1.loc[X3_test.index].copy()
+results_book3 = results_book3.reset_index(drop=True)
+results_book3['Book3_Predicted_DT'] = pred3_dt
+results_book3['Book3_Actual'] = y3_test.values
+
+# Group rows by NumFacture and aggregate:
+# - sum numeric amount columns (MontantHT, MontantTTC, Taxes) when present
+# - for other original book1 columns keep the first occurrence
+# - for predictions and actuals, use the mode (most common) or first if no mode
+def mode_or_first(series):
+    m = series.mode()
+    if not m.empty:
+        return m.iloc[0]
+    return series.iloc[0]
+
+# columns to sum
+sum_cols = [c for c in ['MontantHT', 'MontantTTC', 'Taxes'] if c in book1.columns]
+
+agg_dict = {}
+for col in book1.columns:
+    if col == 'NumFacture':
+        continue
+    if col in ['Book3_Predicted_DT', 'Book3_Actual']:
+        # handled below
+        continue
+    if col in sum_cols:
+        agg_dict[col] = 'sum'
+    else:
+        agg_dict[col] = 'first'
+
+# add aggregations for predictions
+agg_dict['Book3_Predicted_DT'] = lambda s: mode_or_first(s)
+agg_dict['Book3_Actual'] = lambda s: mode_or_first(s)
+
+grouped_book3 = results_book3.groupby('NumFacture').agg(agg_dict).reset_index()
+
+# Add a count of rows per NumFacture
+grouped_book3['row_count'] = results_book3.groupby('NumFacture').size().reindex(grouped_book3['NumFacture']).values
+
+grouped_book3.to_csv('transaction_match_predictions_book3_DT_grouped.csv', index=False)

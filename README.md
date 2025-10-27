@@ -11,6 +11,7 @@ The main goal of Audit Intelligent is to assist auditors by automatically identi
 It combines data preprocessing, statistical analysis, and machine learning models to classify accounting entries as normal or anomalous.
 
 ---
+```
 
 ## Repository Structure
 
@@ -49,15 +50,17 @@ Audit_Intelligent/
 ├── RandomForestClassifier/
 │ ├── random_forest.py # Random Forest model code
 │ └── ... # Model files & predictions
-│
-├── documentation/
-│ └── Figure_1.png # Correlation matrix for feature selection
+├── Report/
+│ └── EL KADIRI SIFEDDINE.pdf # Report in french 
+|
+├── Figure_1.png # Correlation matrix for feature selection
 │
 ├── data_preprocessing.py # Script for data cleaning & preparation
 ├── data_understanding.py # Script for exploratory data analysis
 ├── dockerfile # Docker configuration file
 └── README.md # Project documentation
 
+```
 
 
 ---
